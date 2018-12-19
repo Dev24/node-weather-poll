@@ -5,7 +5,7 @@ var pollDuration = 1000*60; //per minute
 
 function getWeather(city = 'sydney'){
     let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`
-
+    console.log("calling " + url);
     request(url, function (err, response, body) {
         if(err){
         console.log('error:', error);
@@ -31,5 +31,7 @@ poller.onPoll(() => {
 });
 
 // Initial start
+console.log("================ starting weather poller ================");
+
 poller.poll();
 
