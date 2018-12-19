@@ -1,3 +1,5 @@
+
+// ==== logic for calling weather service ====
 const request = require('request');
 
 var apiKey = process.env.OPENWEATHER_KEY;
@@ -6,19 +8,19 @@ var appPort = process.env.PORT || 3000;
 
 function getWeather(city = 'sydney'){
     let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`
-    console.log("calling " + url);
+    
     request(url, function (err, response, body) {
         if(err){
         console.log('error:', error);
         } else {
         let weather = JSON.parse(body)
-        let message = `${Date()}: It's ${weather.main.temp/10} degrees in ${weather.name}!`;
+        let message = `It's ${weather.main.temp/10} degrees in ${weather.name}!`;
         console.log(message);
         }
     });
 }
 
-
+// ==== adding logic for poller ====
 const Poller = require('./poller');
 
 // Set 1s timeout between polls
@@ -33,10 +35,10 @@ poller.onPoll(() => {
 
 // Initial start
 console.log("================ starting weather poller ================");
-
 poller.poll();
 
-//adding rest service - so heroku port gets binded
+
+// ==== adding rest service - so heroku port gets binded ====
 var express = require("express");
 var app = express();
 app.listen(appPort, () => {
