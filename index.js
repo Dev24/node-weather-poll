@@ -3,7 +3,7 @@
 const request = require('request');
 
 var apiKey = process.env.OPENWEATHER_KEY;
-var pollDuration = 1000*60; //per minute
+var pollDuration = 1000*60*60; //per hour
 var appPort = process.env.PORT || 3000;
 
 function getWeather(city = 'sydney'){
