@@ -2,6 +2,7 @@ const request = require('request');
 
 var apiKey = process.env.OPENWEATHER_KEY;
 var pollDuration = 1000*60; //per minute
+var appPort = process.env.PORT || 3000;
 
 function getWeather(city = 'sydney'){
     let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`
@@ -38,7 +39,7 @@ poller.poll();
 //adding rest service - so heroku port gets binded
 var express = require("express");
 var app = express();
-app.listen(3000, () => {
+app.listen(appPort, () => {
  console.log("Server running on port 3000");
 });
 app.get("/url", (req, res, next) => {
