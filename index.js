@@ -18,7 +18,7 @@ function getWeather(city = 'sydney'){
 }
 
 
-const Poller = require('./Poller');
+const Poller = require('./poller');
 
 // Set 1s timeout between polls
 // note: this is previous request + processing time + timeout
