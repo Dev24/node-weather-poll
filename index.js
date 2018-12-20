@@ -1,9 +1,19 @@
 
+/*
+Heroku observations:   
+    case sensitive references to files
+    idles after around 45minutes of inactivity, the next call restarts it again.
+    
+*/
+
 // ==== logic for calling weather service ====
 const request = require('request');
 
+
+
 var apiKey = process.env.OPENWEATHER_KEY;
 var pollDuration = 1000*60*60; //per hour
+var intermPollDuration = 1000*60*20 // 20min
 var appPort = process.env.PORT || 3000;
 
 function getWeather(city = 'sydney'){
@@ -36,6 +46,14 @@ poller.onPoll(() => {
 // Initial start
 console.log("================ starting weather poller ================");
 poller.poll();
+
+let intermPoller = new Poller(intermPollDuration);
+intermPoller.onPoll(() => {
+    console.log("----- interm Poller ran");
+    intermPoller.poll();
+});
+console.log("-- starting interm poll");
+intermPoller.poll();
 
 
 // ==== adding rest service - so heroku port gets binded ====
