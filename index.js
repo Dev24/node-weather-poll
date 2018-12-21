@@ -21,11 +21,11 @@ function getWeather(city = 'sydney'){
     
     request(url, function (err, response, body) {
         if(err){
-        console.log('error:', err);
+            console.log('error:', err);
         } else {
-        let weather = JSON.parse(body)
-        let message = `It's ${weather.main.temp/10} degrees in ${weather.name}!`;
-        console.log(message);
+            let weather = JSON.parse(body)
+            let message = `It's ${weather.main.temp/10} degrees in ${weather.name}!`;
+            console.log(message);
         }
     });
 }
@@ -49,7 +49,7 @@ poller.poll();
 
 let intermPoller = new Poller(intermPollDuration);
 intermPoller.onPoll(() => {
-    let url = 'localhost:${appPort}/status';
+    let url = `localhost:${appPort}/status`;
     console.log("----- interm Poller ran ", url);
     request(url, function (err, response, body) {
         if(err){
