@@ -50,6 +50,13 @@ poller.poll();
 let intermPoller = new Poller(intermPollDuration);
 intermPoller.onPoll(() => {
     console.log("----- interm Poller ran");
+    request('localhost:${appPort}/status', function (err, response, body) {
+        if(err){
+            console.log('error:', error);
+        } else {
+            console.log("call resp: " + body);
+        }
+    });
     intermPoller.poll();
 });
 console.log("-- starting interm poll");
@@ -61,13 +68,6 @@ var express = require("express");
 var app = express();
 app.listen(appPort, () => {
     console.log("Server running on port 3000");
-    request('localhost:${appPort}/status', function (err, response, body) {
-        if(err){
-            console.log('error:', error);
-        } else {
-            console.log("call resp: " + body);
-        }
-    });
 });
 app.get("/status", (req, res, next) => {
     res.json({'status': 'up'});
