@@ -49,7 +49,7 @@ poller.poll();
 
 let intermPoller = new Poller(intermPollDuration);
 intermPoller.onPoll(() => {
-    let url = `localhost:${appPort}/status`;
+    let url = `node-weather-poll.herokuapp.com/status`;
     console.log("----- interm Poller ran ", url);
     request(url, function (err, response, body) {
         if(err){
