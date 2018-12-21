@@ -21,7 +21,7 @@ function getWeather(city = 'sydney'){
     
     request(url, function (err, response, body) {
         if(err){
-        console.log('error:', error);
+        console.log('error:', err);
         } else {
         let weather = JSON.parse(body)
         let message = `It's ${weather.main.temp/10} degrees in ${weather.name}!`;
@@ -49,10 +49,11 @@ poller.poll();
 
 let intermPoller = new Poller(intermPollDuration);
 intermPoller.onPoll(() => {
-    console.log("----- interm Poller ran");
-    request('localhost:${appPort}/status', function (err, response, body) {
+    let url = 'localhost:${appPort}/status';
+    console.log("----- interm Poller ran ", url);
+    request(url, function (err, response, body) {
         if(err){
-            console.log('error:', error);
+            console.log('error:', err);
         } else {
             console.log("call resp: " + body);
         }
